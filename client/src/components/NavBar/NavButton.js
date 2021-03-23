@@ -19,6 +19,10 @@ export const NavButton = ({ view, Icon }) => {
       className={`navbar__button ${active ? "--active" : ""}`}
       onClick={() => dispatch(setView(view))}
     >
+      {active && (
+        <div className="navbar__button-activebar">
+        </div>
+      )}
       <Icon fontSize="large" />
       <span className="navbar__button-text">
         {view}
