@@ -2,9 +2,12 @@
   width: 60px;
   height: 100vh;
   background-color: #2C373D;
+  color: whitesmoke;
 
   display: flex;
   flex-direction: column;
+
+  justify-content: space-between;
 
   position: absolute;
   top: 0;
@@ -19,5 +22,41 @@
   &:hover {
     width: 225px;
     transition: .3s;
+
+    .navbar__button-text {
+      visibility: visible;
+    }
+  }
+
+
+  &__button {
+    cursor: pointer;
+    position: relative;
+
+    padding: 6px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    &:hover {
+      background-color: #21292e;
+    }
+
+    &.--active {
+      color: #00EAFC !important;
+
+      span{
+        font-weight: bold;
+      }
+    }
+
+    &-text {
+      visibility: hidden;
+
+      position: absolute;
+
+      left: 60px;
+    }
   }
 }

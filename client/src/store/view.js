@@ -5,7 +5,7 @@ export const setView = (view) => ({
   payload: view
 })
 
-let initialState = "Home"
+let initialState = "Projects"
 
 function viewReducer(state = initialState, action) {
   switch (action.type) {
