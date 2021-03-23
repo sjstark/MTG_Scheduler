@@ -2,6 +2,24 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { login } from "../../services/auth";
 
+import {
+  TextField,
+  Button,
+  Container,
+  Box,
+  Grid,
+  Paper,
+  Typography
+} from "@material-ui/core"
+
+import {
+  Alert
+} from '@material-ui/lab'
+
+import Image from 'material-ui-image'
+
+import MTGLogo from '../../media/MTG Logo Black.png'
+
 const LoginForm = ({ authenticated, setAuthenticated }) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
@@ -30,34 +48,87 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error) => (
-          <div>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={updateEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type="submit">Login</button>
-      </div>
-    </form>
+
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+
+      <Paper>
+        <Box
+          p={4}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box width="300px">
+            <Image src={MTGLogo} />
+          </Box>
+          <Typography
+            variant="h3"
+          >
+            Labor Scheduling Utility
+      </Typography>
+
+          <div>
+            {errors.map((error) => (
+              <Alert
+                severity="error"
+              >
+                {error}
+              </Alert>
+            ))}
+          </div>
+          <TextField
+            label="Email"
+            variant="outlined"
+            name="email"
+            type="text"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={updateEmail}
+            margin="normal"
+          />
+
+          <TextField
+            label="Password"
+            variant="outlined"
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={updatePassword}
+            margin="normal"
+          />
+          <Box m={1}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={onLogin}
+              m={3}
+            >
+              Login
+            </Button>
+          </Box>
+          <Box m={1}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled
+              margin="normal"
+            >
+              New Member
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
