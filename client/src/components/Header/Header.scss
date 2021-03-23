@@ -1,0 +1,13 @@
+.header {
+  height: 60px;
+  width: calc(100vw - 60px);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  background-color: #4A5D66;
+
+  display: flex;
+  align-items: center;
+}

@@ -12,12 +12,14 @@
     "@testing-library/user-event": "^7.1.2",
     "http-proxy-middleware": "^1.0.5",
     "material-ui-image": "^3.3.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^4.14.1",
     "react": "^17.0.0",
     "react-contenteditable": "^3.3.5",
     "react-dom": "^17.0.0",
+    "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

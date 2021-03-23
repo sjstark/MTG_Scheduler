@@ -11,6 +11,13 @@ const theme = createMuiTheme({
       'Montserrat',
       'sans-serif',
     ].join(',')
+  },
+  palette: {
+    primary: {
+      light: "#6fbf73",
+      main: "#4caf50",
+      dark: "#357a38"
+    }
   }
 })
 

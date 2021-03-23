@@ -1,0 +1,23 @@
+.navbar {
+  width: 60px;
+  height: 100vh;
+  background-color: #2C373D;
+
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  top: 0;
+  z-index: 5;
+
+  transition: .1s;
+
+  img {
+    width: 60px;
+  }
+
+  &:hover {
+    width: 225px;
+    transition: .3s;
+  }
+}

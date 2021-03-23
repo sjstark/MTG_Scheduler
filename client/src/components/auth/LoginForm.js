@@ -57,7 +57,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
       height="100vh"
     >
 
-      <Paper>
+      <Paper elevation={3}>
         <Box
           p={4}
           display="flex"
