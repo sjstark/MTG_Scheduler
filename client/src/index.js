@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { Provider } from 'react-redux'
+import configureStore from './store'
+
+const store = configureStore()
 
 const theme = createMuiTheme({
   typography: {
@@ -24,8 +28,10 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
+      <Provider store={store}>
+        <CssBaseline />
+        <App />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
