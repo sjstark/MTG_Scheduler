@@ -10,7 +10,6 @@ export const NavButton = ({ view, Icon }) => {
   const [active, setActive] = useState(currentView == view)
 
   useEffect(() => {
-    console.log(view, currentView)
     setActive(view == currentView)
   }, [view, currentView])
 

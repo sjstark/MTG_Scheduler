@@ -27,8 +27,8 @@ class Project(db.Model):
       "id": self.id,
       "title": self.title,
       "dates": {
-        "start": self.start_date,
-        "end": self.end_date
+        "start": self.start_date.strftime("%Y-%m-%d"),
+        "end": self.end_date.strftime("%Y-%m-%d")
       },
       "client": self.client.to_dict() if self.client else None,
       "contact": self.contact.to_dict() if self.contact else None,

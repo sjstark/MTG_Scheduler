@@ -1,9 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import viewReducer from './view'
+import projectsReducer from './projects'
 
 const rootReducer = combineReducers({
-  view: viewReducer
+  view: viewReducer,
+  projectsData: projectsReducer
 })
 
 let enhancer;

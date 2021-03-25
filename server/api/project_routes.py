@@ -11,7 +11,7 @@ from server.forms import CreateProjectForm
 project_routes = Blueprint('project', __name__)
 
 
-@project_routes.route('/', methods=["GET"])
+@project_routes.route('', methods=["GET"])
 @login_required
 def get_all_projects():
 
@@ -30,17 +30,25 @@ def get_all_projects():
     endDate = startDate + relativedelta(months=months)
 
     projects = Project.query.filter(Project.start_date >= startDate.strftime("%Y-%m-%d")).filter( Project.start_date < endDate.strftime("%Y-%m-%d")).order_by(Project.start_date).all()
+    total = Project.query.count()
 
-    months = {}
+    dates = {}
+    rangeArray = []
     current = startDate
     while current < endDate:
-        months[(current.strftime("%B %Y"))] = []
+        dates[current.strftime("%Y-%m")] = []
+        rangeArray.append(current.strftime("%Y-%m"))
         current += relativedelta(months=1)
 
     for project in projects:
-        months[project.start_date.strftime("%B %Y")].append(project.to_dict())
+        dates[project.start_date.strftime("%Y-%m")].append(project.to_dict())
 
-    data = {"projects": months}
+    data = {
+        "total": total,
+        "range": rangeArray,
+        "projects": dates,
+        "count": len(projects)
+    }
     return jsonify(data)
 
 
@@ -62,8 +70,6 @@ def create_new_project():
 
         db.session.add(project)
         db.session.commit()
-
-        print(project)
 
         return project.to_dict()
 

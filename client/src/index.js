@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
 import { Provider } from 'react-redux'
 import configureStore from './store'
 
@@ -29,8 +32,10 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <CssBaseline />
-        <App />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <CssBaseline />
+          <App />
+        </MuiPickersUtilsProvider>
       </Provider>
     </ThemeProvider>
   </React.StrictMode>,
