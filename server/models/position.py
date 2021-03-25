@@ -4,16 +4,16 @@ class Department(db.Model):
   __tablename__ = 'departments'
 
   id = db.Column(db.Integer, primary_key = True)
-  title = db.Column(db.String(150), nullable = Fasle, unique = True)
+  title = db.Column(db.String(150), nullable = False, unique = True)
 
-  positions = db.relationship("Position", backref = db.backref("department", cascade="all, delete-orphans"))
+  positions = db.relationship("Position", backref = db.backref("department"), cascade="all, delete-orphan")
 
 
   def to_dict(self):
-      return {
-          "id": self.id,
-          "title": self.title
-      }
+    return {
+      "id": self.id,
+      "title": self.title
+    }
 
 
 class Position(db.Model):
@@ -21,19 +21,19 @@ class Position(db.Model):
 
   id = db.Column(db.Integer, primary_key = True)
   title = db.Column(db.String(150), nullable = False, unique = True)
-  department_id = db.Column(db.Integer, nullable = False)
+  department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable = False)
   rate = db.Column(db.Float(precision = 2), nullable = False)
   ot_rate = db.Column(db.Float(precision = 2), nullable = False)
   dt_rate = db.Column(db.Float(precision = 2), nullable = False)
 
-  shifts = db.relationship("Shift", backref = db.backref("positions", cascade = "all, delete-orphans")
+  shifts = db.relationship("Shift", backref = db.backref("positions"), cascade = "all, delete-orphan")
 
   def to_dict(self):
-      return {
-          "id": self.id,
-          "title": self.title,
-          "departmentId": self.department_id,
-          "rate": self.rate,
-          "OTRate": self.ot_rate,
-          "DTRate": self.dt_rate
-      }
+    return {
+      "id": self.id,
+      "title": self.title,
+      "departmentId": self.department_id,
+      "rate": self.rate,
+      "OTRate": self.ot_rate,
+      "DTRate": self.dt_rate
+    }
