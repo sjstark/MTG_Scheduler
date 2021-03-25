@@ -7,7 +7,7 @@ import {
   Container,
   Box,
   Button,
-  Input,
+  TextField,
   Typography,
   Grid,
   IconButton
@@ -33,8 +33,9 @@ export default function AddProject({ open, onClose }) {
     console.log(formData)
   }
 
-  const loadClients = async () => {
-
+  const loadClients = async (inputValue, callback) => {
+    const res = await axios.get(`/api/clients?query=${inputValue}`)
+    callback(res.data)
   }
 
   return (
@@ -42,7 +43,7 @@ export default function AddProject({ open, onClose }) {
       onClose={onClose}
       open={open}
     >
-      <Box m={5}>
+      <Box m={5} >
         <Box mb={3}>
           <Typography variant="h4">
             Create A New Project
@@ -55,25 +56,37 @@ export default function AddProject({ open, onClose }) {
           // alignItems="flex-start"
           spacing={3}
         >
-          <Grid item xs={12}>
+          <Grid item xs={6}>
 
-            <Input
-              type="text"
+            <TextField
+              variant="outlined"
               placeholder="Project Title"
               value={formData.title}
               onChange={({ target }) => setFormData({ ...formData, title: target.value })}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <KeyboardDatePicker
+              inputVariant="outlined"
               label="Start Date"
               format="MM/dd/yyyy"
               value={formData.startDate}
               onChange={(value) => setFormData({ ...formData, startDate: value })}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
+
+            <AsyncSelect
+              defaultOptions
+              cacheOptions
+              loadOptions={loadClients}
+              onChange={(target) => setFormData({ ...formData, clientId: target.value })}
+            />
+
+          </Grid>
+          <Grid item xs={6}>
             <KeyboardDatePicker
+              inputVariant="outlined"
               label="End Date"
               format="MM/dd/yyyy"
               value={formData.endDate}
@@ -81,24 +94,7 @@ export default function AddProject({ open, onClose }) {
             />
           </Grid>
           <Grid item xs={12}>
-            <Box display="flex" alignItems="center">
-              <Box width="100%">
-
-                <AsyncSelect
-                  cacheOptions
-                  loadOptions={loadClients}
-                  onInputChange={(value) => setFormData({ ...formData, clientId: value })}
-                />
-              </Box>
-
-              <IconButton>
-                <CachedIcon />
-              </IconButton>
-            </Box>
-
-          </Grid>
-          <Grid item xs={12}>
-            <Box>
+            <Box mt={3} display="flex" justifyContent="space-around">
               <Button
                 onClick={handleSubmit}
                 color="primary"
@@ -113,6 +109,7 @@ export default function AddProject({ open, onClose }) {
                 Cancel
             </Button>
             </Box>
+
           </Grid>
         </Grid>
       </Box>
