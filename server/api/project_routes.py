@@ -52,20 +52,19 @@ def get_all_projects():
     return jsonify(data)
 
 
-@project_routes.route('/', methods=["POST"])
+@project_routes.route('', methods=["POST"])
 @login_required
 def create_new_project():
     form = CreateProjectForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print(form.data)
 
     if form.validate_on_submit():
         project = Project(
             title = form.title.data,
             start_date = form.startDate.data,
             end_date = form.endDate.data,
-            client_id = form.clientID.data
+            client_id = form.clientId.data
         )
 
         db.session.add(project)

@@ -17,22 +17,22 @@ class CreateProjectForm(FlaskForm):
         ]
     )
 
-    startDate = DateField(
+    startDate = StringField(
         'startDate',
         validators=[
             DataRequired()
         ]
     )
 
-    endDate = DateField(
+    endDate = StringField(
         'endDate',
         validators=[
             DataRequired()
         ]
     )
 
-    clientID = IntegerField(
-        'clientID',
+    clientId = IntegerField(
+        'clientId',
         validators=[
             DataRequired()
         ]

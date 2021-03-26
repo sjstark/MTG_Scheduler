@@ -22,15 +22,19 @@ import CachedIcon from '@material-ui/icons/Cached';
 
 
 export default function AddProject({ open, onClose }) {
-  const [formData, setFormData] = useState({
+  const [newProjectData, setNewProjectData] = useState({
     title: "",
     startDate: new Date(),
     endDate: new Date(),
-    clientId: ""
+    clientId: null
   })
 
-  const handleSubmit = () => {
-    console.log(formData)
+  const handleSubmit = async () => {
+    const res = await axios.post(`/api/projects`, newProjectData)
+
+    console.log(res.data)
+
+    // onClose()
   }
 
   const loadClients = async (inputValue, callback) => {
@@ -61,8 +65,8 @@ export default function AddProject({ open, onClose }) {
             <TextField
               variant="outlined"
               placeholder="Project Title"
-              value={formData.title}
-              onChange={({ target }) => setFormData({ ...formData, title: target.value })}
+              value={newProjectData.title}
+              onChange={({ target }) => setNewProjectData({ ...newProjectData, title: target.value })}
             />
           </Grid>
           <Grid item xs={6}>
@@ -70,8 +74,8 @@ export default function AddProject({ open, onClose }) {
               inputVariant="outlined"
               label="Start Date"
               format="MM/dd/yyyy"
-              value={formData.startDate}
-              onChange={(value) => setFormData({ ...formData, startDate: value })}
+              value={newProjectData.startDate}
+              onChange={(value) => setNewProjectData({ ...newProjectData, startDate: value })}
             />
           </Grid>
           <Grid item xs={6}>
@@ -80,7 +84,7 @@ export default function AddProject({ open, onClose }) {
               defaultOptions
               cacheOptions
               loadOptions={loadClients}
-              onChange={(target) => setFormData({ ...formData, clientId: target.value })}
+              onChange={(target) => setNewProjectData({ ...newProjectData, clientId: parseInt(target.value) })}
             />
 
           </Grid>
@@ -89,8 +93,8 @@ export default function AddProject({ open, onClose }) {
               inputVariant="outlined"
               label="End Date"
               format="MM/dd/yyyy"
-              value={formData.endDate}
-              onChange={(value) => setFormData({ ...formData, endDate: value })}
+              value={newProjectData.endDate}
+              onChange={(value) => setNewProjectData({ ...newProjectData, endDate: value })}
             />
           </Grid>
           <Grid item xs={12}>
