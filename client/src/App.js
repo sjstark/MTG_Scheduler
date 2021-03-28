@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import MainApp from './MainApp'
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
@@ -10,6 +10,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
 import { Grid } from "@material-ui/core"
+import ProjectsOverview from './components/Views/Projects/Overview'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -47,8 +48,13 @@ function App() {
             setAuthenticated={setAuthenticated}
           />
         </Route>
+        <ProtectedRoute path="/projects" authenticated={authenticated}>
+          <div className="mainApp">
+            <ProjectsOverview />
+          </div>
+        </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-          <MainApp />
+          <Redirect to="/projects" />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

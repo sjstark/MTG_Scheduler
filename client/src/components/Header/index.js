@@ -1,6 +1,7 @@
 import { Typography, Box, withStyles } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useLocation } from 'react-router'
 
 import './Header.scss'
 
@@ -11,7 +12,39 @@ const WhiteText = withStyles({
   }
 })(Typography)
 
-function Header({ view }) {
+export default function Header() {
+
+  const location = useLocation()
+
+  const [view, setView] = useState()
+
+
+  useEffect(() => {
+    let path = location.pathname.split('/')
+    let viewname = path[1]
+    console.log(path, viewname)
+    switch (viewname) {
+      case "projects":
+        setView("Projects")
+        if (/^([0-9]+)$/.test(path[2])) {
+          setView("Projects - " + path[2])
+        }
+        return
+      case "venues":
+        setView("Venues")
+        return
+      case "clients":
+        setView("Clients")
+        return
+      case "departments":
+        setView("Departments")
+        return
+      default:
+        setView("Home")
+        return
+    }
+  }, [location.pathname])
+
   return (
     <header className="header">
       <Box m={2}>
@@ -25,9 +58,9 @@ function Header({ view }) {
   )
 }
 
-const mapStateToProps = (state) => {
-  const { view } = state
-  return { view }
-}
+// const mapStateToProps = (state) => {
+//   const { view } = state
+//   return { view }
+// }
 
-export default connect(mapStateToProps)(Header)
+// export default connect(mapStateToProps)(Header)

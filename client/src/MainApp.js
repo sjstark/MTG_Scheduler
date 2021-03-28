@@ -9,6 +9,7 @@ export default function MainApp() {
   const currentView = useSelector(state => state.view)
 
   const renderSwitch = (currentView) => {
+
     switch (currentView) {
       case "Projects":
         return <ProjectsOverview />

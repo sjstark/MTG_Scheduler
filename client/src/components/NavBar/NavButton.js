@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { connect, useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import { setView } from '../../store/view'
 
 export const NavButton = ({ view, Icon }) => {
-  const dispatch = useDispatch()
 
-  const currentView = useSelector(state => state.view)
+  const history = useHistory()
 
-  const [active, setActive] = useState(currentView == view)
+  const location = useLocation()
 
-  useEffect(() => {
-    setActive(view == currentView)
-  }, [view, currentView])
+  const [active, setActive] = useState(location.pathname.split('/')[0] == view.toLowerCase())
+
+
+
+  // useEffect(() => {
+  //   setActive(view == currentView)
+  // }, [view, currentView])
+
+  const navigate = () => {
+    history.push(`/${view.toLowerCase()}`)
+  }
 
   return (
-    <div
-      className={`navbar__button ${active ? "--active" : ""}`}
-      onClick={() => dispatch(setView(view))}
+    <NavLink
+      className={`navbar__button`}
+      to={view.toLowerCase()}
+      activeClassName="--active"
+    // onClick={navigate}
     >
       {active && (
         <div className="navbar__button-activebar">
@@ -26,7 +36,7 @@ export const NavButton = ({ view, Icon }) => {
       <span className="navbar__button-text">
         {view}
       </span>
-    </div>
+    </NavLink>
   )
 }
 

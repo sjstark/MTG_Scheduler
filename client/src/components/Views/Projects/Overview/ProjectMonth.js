@@ -2,6 +2,9 @@ import { Box, Paper, Typography, Grid, Button } from '@material-ui/core'
 import React from 'react'
 import { format } from 'date-fns'
 
+import { useDispatch } from 'react-redux'
+import { setView } from '../../../../store/view'
+
 const formatTitle = (date) => {
   let datetime = new Date(date + "-10")
   // console.log({ date, datetime })
@@ -14,11 +17,15 @@ const formatDate = (date) => {
   return `${newDate[1]}/${newDate[2]}`
 }
 
-const setProjectView = (projectId) => {
-  console.log(projectId)
-}
 
 export default function ProjectMonth({ month, projects }) {
+  const dispatch = useDispatch()
+
+  const setProjectView = (projectId) => {
+    console.log(projectId)
+    dispatch(setView(`Projects - ${projectId}`))
+  }
+
 
   return projects.length > 0
     ?
