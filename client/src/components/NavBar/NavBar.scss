@@ -33,6 +33,8 @@
     cursor: pointer;
     position: relative;
 
+    color: inherit;
+
     padding: 6px 12px;
 
     display: flex;
@@ -48,11 +50,21 @@
     }
 
     &.--active {
-      color: #00EAFC !important;
+      color: #00EAFC;
       background-color: #21292e;
 
       span{
         font-weight: bold;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+      left: 0px;
+
+      width: 5px;
+      height: 100%;
+      background-color: #00EAFC;
       }
     }
 
@@ -62,15 +74,6 @@
       position: absolute;
 
       left: 60px;
-    }
-
-    &-activebar {
-      position: absolute;
-      left: 0px;
-
-      width: 5px;
-      height: 100%;
-      background-color: #00EAFC;
     }
   }
 }
