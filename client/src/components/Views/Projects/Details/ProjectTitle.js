@@ -1,12 +1,17 @@
 import { Box, Paper, TextField } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import { mergeClasses } from '@material-ui/styles'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+// import EditIcon from '@material-ui/icons/Edit';
+// import DoneIcon from '@material-ui/icons/Done';
 
 const styles = theme => ({
   input: {
     fontSize: "2.125rem",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    "& .Mui-disabled": {
+      color: "black"
+    }
   },
 })
 
@@ -16,6 +21,9 @@ const styles = theme => ({
 const ProjectTitle = withStyles(styles)(({ project, classes }) => {
 
   const [title, setTitle] = useState("Loading...")
+  // const [editing, setEditing] = useState(false)
+
+  const InputRef = useRef()
 
   useEffect(() => {
     if (!project.title) {
@@ -25,15 +33,17 @@ const ProjectTitle = withStyles(styles)(({ project, classes }) => {
     }
   }, [project])
 
+
   return (
     <Box m={5} >
       <Paper>
-        <Box p={2}>
+        <Box p={2} display="flex">
           <TextField
             InputProps={{ disableUnderline: true, className: classes.input }}
             value={title}
             onChange={({ value }) => setTitle(value)}
             fullWidth
+            inputRef={InputRef}
           />
         </Box>
       </Paper>

@@ -23,6 +23,29 @@ class Project(db.Model):
 
   versions = db.relationship("Version", backref = db.backref("project"), cascade = "all, delete-orphan")
 
+  @property
+  def positions(self):
+    position_ids = set()
+    departments = {}
+
+    for shift_date in self.shift_dates:
+      for shift in shift_date.shifts:
+        position = shift.position
+        if position.id not in position_ids:
+          position_ids.add(position.id)
+
+          if position.department_id not in departments:
+            departments[position.department_id] = {
+              'title': position.department.title,
+              'positions': []
+            }
+
+          departments[position.department_id]['positions'].append(position.to_dict())
+
+
+
+    return departments
+
   def to_dict(self):
     return {
       "id": self.id,
@@ -57,7 +80,8 @@ class Project(db.Model):
       #     [shift_date.shifts_list for shift_date in self.shift_dates]
       #   )
       # },
-      "schedule": [shift_date.to_schedule() for shift_date in self.shift_dates]
+      "schedule": [shift_date.to_schedule() for shift_date in self.shift_dates],
+      "departments": self.positions
     }
 
 

@@ -26,13 +26,14 @@ class Position(db.Model):
   ot_rate = db.Column(db.Float(precision = 2), nullable = False)
   dt_rate = db.Column(db.Float(precision = 2), nullable = False)
 
-  shifts = db.relationship("Shift", backref = db.backref("positions"), cascade = "all, delete-orphan")
+  shifts = db.relationship("Shift", backref = db.backref("position"), cascade = "all, delete-orphan")
 
   def to_dict(self):
     return {
       "id": self.id,
       "title": self.title,
       "departmentId": self.department_id,
+      "departmentTitle": self.department.title,
       "rate": self.rate,
       "OTRate": self.ot_rate,
       "DTRate": self.dt_rate

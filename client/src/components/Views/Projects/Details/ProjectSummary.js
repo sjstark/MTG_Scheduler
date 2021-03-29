@@ -1,20 +1,18 @@
 import { Box, Collapse, Paper, Typography, IconButton, Grid, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 
-
-
 import OpenIcon from '@material-ui/icons/KeyboardArrowDown';
 import CloseIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const loadingProject = {
   client: { name: "Loading" },
   contact: { email: "Loading" },
-  quoteIssued: "Loading",
-  quoteValid: "Loading",
+  quoteIssued: "",
+  quoteValid: "",
   adminNotes: "Loading",
 }
 
-function Detail({ title, value, onChange }) {
+function Detail({ title, value, onChange, type = 'string' }) {
 
   return (
     <Grid item xs={12} container spacing={1} justifyContent="flex-start">
@@ -29,6 +27,7 @@ function Detail({ title, value, onChange }) {
           InputProps={{ disableUnderline: true }}
           value={value}
           onChange={({ value }) => onChange(value)}
+          type={type}
         // width="50%"
         />
       </Grid>
@@ -95,13 +94,35 @@ export default function ProjectSummary({ project }) {
           <Collapse in={open}>
             <Grid container spacing={1}>
               <Grid container item sm={12} md={4} spacing={1}>
-                <Detail title="Client" value={projectDetails.client ? projectDetails.client.name : "N/A"} onChange={handleChange} />
-                <Detail title="Client Contact" value={projectDetails.contact ? projectDetails.contact.email : "N/A"} onChange={handleChange} />
-                <Detail title="Quote Issued Date" value={projectDetails.quoteIssued} onChange={handleChange} />
-                <Detail title="Quote Valid Date" value={projectDetails.quoteValid} onChange={handleChange} />
+                <Detail
+                  title="Client"
+                  value={projectDetails.client ? projectDetails.client.name : "N/A"}
+                  onChange={handleChange}
+                />
+                <Detail
+                  title="Client Contact"
+                  value={projectDetails.contact ? projectDetails.contact.email : "N/A"}
+                  onChange={handleChange}
+                />
+                <Detail
+                  title="Quote Issued Date"
+                  value={projectDetails.quoteIssued}
+                  onChange={handleChange}
+                  type="date"
+                />
+                <Detail
+                  title="Quote Valid Date"
+                  value={projectDetails.quoteValid}
+                  onChange={handleChange}
+                  type="date"
+                />
               </Grid>
               <Grid container item sm={12} md={8} spacing={1}>
-                <Notes title="Admin Notes" value={projectDetails.adminNotes} onChange={handleChange} />
+                <Notes
+                  title="Admin Notes"
+                  value={projectDetails.adminNotes}
+                  onChange={handleChange}
+                />
               </Grid>
             </Grid>
           </Collapse>

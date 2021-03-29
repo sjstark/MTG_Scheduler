@@ -15,7 +15,7 @@ const NavBar = ({ setAuthenticated }) => {
   return (
     <nav className="navbar">
       <div className="navbar__top-group">
-        <img src={MTGLogo} />
+        <img src={MTGLogo} alt="MTG Logo" />
         <NavButton view="Projects" Icon={ProjectsIcon} />
         <NavButton view="Venues" Icon={VenuesIcon} />
         <NavButton view="Departments" Icon={DepartmentsIcon} />

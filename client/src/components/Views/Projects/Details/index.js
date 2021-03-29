@@ -1,6 +1,7 @@
 import { Box } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { format } from 'date-fns'
 
 import { useParams } from 'react-router-dom'
 
@@ -20,7 +21,11 @@ export default function ProjectDetails() {
       setProject({})
       const res = await axios.get(`/api/projects/${projectId}`)
       if (res.status === 200) {
-        setProject(res.data)
+        let project = res.data
+        project.quoteIssued = format(new Date(project.quoteIssued), "yyyy-MM-dd")
+        project.quoteValid = format(new Date(project.quoteValid), "yyyy-MM-dd")
+        setProject(project)
+
       }
     })()
   }, [projectId])
