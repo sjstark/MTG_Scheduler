@@ -22,7 +22,6 @@ function Header({ project }) {
   useEffect(() => {
     let path = location.pathname.split('/')
     let viewname = path[1]
-    console.log(path, viewname)
     switch (viewname) {
       case "projects":
         setView("Projects")

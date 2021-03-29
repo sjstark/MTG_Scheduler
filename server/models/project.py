@@ -1,4 +1,5 @@
 from .db import db
+import json
 
 class Project(db.Model):
   __tablename__ = 'projects'
@@ -37,6 +38,28 @@ class Project(db.Model):
       "adminNotes": self.admin_notes,
     }
 
+  def to_dict_full(self):
+    return {
+      "id": self.id,
+      "title": self.title,
+      "dates": {
+        "start": self.start_date.strftime("%Y-%m-%d"),
+        "end": self.end_date.strftime("%Y-%m-%d")
+      },
+      "client": self.client.to_dict() if self.client else None,
+      "contact": self.contact.to_dict() if self.contact else None,
+      "quoteIssued": self.quote_issued,
+      "quoteValid": self.quote_valid,
+      "adminNotes": self.admin_notes,
+      # "schedule": {
+      #   date:shifts for (date, shifts) in zip(
+      #     self.shift_dates,
+      #     [shift_date.shifts_list for shift_date in self.shift_dates]
+      #   )
+      # },
+      "schedule": [shift_date.to_schedule() for shift_date in self.shift_dates]
+    }
+
 
 class Shift_Date(db.Model):
   __tablename__ = 'shift_dates'
@@ -46,6 +69,13 @@ class Shift_Date(db.Model):
   date = db.Column(db.Date, nullable = False)
 
   shifts = db.relationship("Shift", backref = db.backref("shift_dates"), cascade = "all, delete-orphan")
+
+  def to_schedule(self):
+    return {
+      "shiftDateId": self.id,
+      "date": self.date,
+      "shifts": [shift.to_dict() for shift in self.shifts]
+    }
 
   def to_dict(self):
     return {
@@ -69,8 +99,8 @@ class Shift(db.Model):
       "id": self.id,
       "positionId": self.position_id,
       "quantity": self.quantity,
-      "startTime": self.start_time,
-      "endTime": self.end_time
+      "startTime": json.dumps(self.start_time, default=str),
+      "endTime": json.dumps(self.end_time, default=str)
     }
 
 

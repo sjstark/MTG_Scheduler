@@ -9,19 +9,19 @@ import CloseIcon from '@material-ui/icons/KeyboardArrowUp';
 function Detail({ title, value, onChange }) {
 
   return (
-    <Grid item xs={12} container spacing={1}>
-      <Grid item xs={4}>
+    <Grid item xs={12} container spacing={1} justifyContent="flex-start">
+      <Grid item xs={4} sm={5} md={6}>
 
-        <Typography variant="h6" width="50%" align="right">
+        <Typography variant="h6" align="right">
           {`${title}:`}
         </Typography>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={8} sm={7} md={6}>
         <TextField
           InputProps={{ disableUnderline: true }}
           value={value}
           onChange={({ value }) => onChange(value)}
-          width="50%"
+        // width="50%"
         />
       </Grid>
     </Grid >
@@ -32,15 +32,16 @@ function Notes({ title, value, onChange }) {
   return (
     <Grid item xs={12}>
       <Box display="flex">
-        <Typography variant="h6" width="50%">
+        <Typography variant="h6">
           {`${title}:`}
         </Typography>
         <TextField
           InputProps={{ disableUnderline: true }}
           value={value}
           onChange={({ value }) => onChange(value)}
-          width="50%"
+          // width="50%"
           multiline
+          fullWidth
         />
       </Box >
     </Grid >
@@ -77,13 +78,13 @@ export default function ProjectSummary({ project }) {
           </Box>
           <Collapse in={open}>
             <Grid container spacing={1}>
-              <Grid container item xs={6} spacing={1}>
+              <Grid container item sm={12} md={4} spacing={1}>
                 <Detail title="Client" value={test1} onChange={setTest1} />
                 <Detail title="Client Contact" value={test2} onChange={setTest2} />
                 <Detail title="Quote Issued Date" value={test3} onChange={setTest3} />
                 <Detail title="Quote Valid Date" value={test4} onChange={setTest4} />
               </Grid>
-              <Grid container item xs={6} spacing={1}>
+              <Grid container item sm={12} md={8} spacing={1}>
                 <Notes title="Admin Notes" value={test5} onChange={setTest5} />
               </Grid>
             </Grid>

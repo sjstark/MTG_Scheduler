@@ -73,3 +73,12 @@ def create_new_project():
         return project.to_dict()
 
     return {'errors': validation_errors_to_error_messages(form.errors)}
+
+
+@project_routes.route('/<project_id>', methods=["GET"])
+@login_required
+def get_project_by_id(project_id):
+    project = Project.query.get(project_id)
+    if project:
+        return project.to_dict_full()
+    return {'Errors': 'Cannot find the requested resource'}, 404
