@@ -1,18 +1,36 @@
 import { Box, Paper, TextField } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
-import React, { useState } from 'react'
+import { mergeClasses } from '@material-ui/styles'
+import React, { useEffect, useState } from 'react'
+
+const styles = theme => ({
+  input: {
+    fontSize: "2.125rem",
+    fontWeight: "bold"
+  },
+})
+
+// const BigTextField = withStyles(styles)(TextField)
 
 
-export default function ProjectTitle({ project }) {
+const ProjectTitle = withStyles(styles)(({ project, classes }) => {
 
-  const [title, setTitle] = useState("A New Project")
+  const [title, setTitle] = useState("Loading...")
+
+  useEffect(() => {
+    if (!project.title) {
+      setTitle("Loading...")
+    } else {
+      setTitle(project.title)
+    }
+  }, [project])
 
   return (
     <Box m={5} >
       <Paper>
         <Box p={2}>
           <TextField
-            InputProps={{ disableUnderline: true, classes: { input: { fontsize: 100 } } }}
+            InputProps={{ disableUnderline: true, className: classes.input }}
             value={title}
             onChange={({ value }) => setTitle(value)}
             fullWidth
@@ -21,4 +39,6 @@ export default function ProjectTitle({ project }) {
       </Paper>
     </Box>
   )
-}
+})
+
+export default ProjectTitle

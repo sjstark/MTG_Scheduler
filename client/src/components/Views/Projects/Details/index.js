@@ -19,9 +19,15 @@ export default function ProjectDetails() {
     (async () => {
       setProject({})
       const res = await axios.get(`/api/projects/${projectId}`)
-      console.log(res.data)
+      if (res.status === 200) {
+        setProject(res.data)
+      }
     })()
   }, [projectId])
+
+  useEffect(() => {
+    console.log(project)
+  }, [project])
 
   return (
     <Box>

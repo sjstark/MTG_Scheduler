@@ -1,10 +1,18 @@
 import { Box, Collapse, Paper, Typography, IconButton, Grid, TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 
 import OpenIcon from '@material-ui/icons/KeyboardArrowDown';
 import CloseIcon from '@material-ui/icons/KeyboardArrowUp';
+
+const loadingProject = {
+  client: { name: "Loading" },
+  contact: { email: "Loading" },
+  quoteIssued: "Loading",
+  quoteValid: "Loading",
+  adminNotes: "Loading",
+}
 
 function Detail({ title, value, onChange }) {
 
@@ -51,11 +59,19 @@ function Notes({ title, value, onChange }) {
 export default function ProjectSummary({ project }) {
 
   const [open, setOpen] = useState(true)
-  const [test1, setTest1] = useState("default1")
-  const [test2, setTest2] = useState("default2")
-  const [test3, setTest3] = useState("default3")
-  const [test4, setTest4] = useState("default4")
-  const [test5, setTest5] = useState(`Quisque fermentum quam ut leo lobortis vestibulum. Duis pulvinar dolor vitae rhoncus rhoncus. Cras volutpat metus enim, non venenatis urna placerat vitae. Curabitur ac urna eget mi iaculis malesuada nec eu orci. Nullam rutrum dictum condimentum. Ut eget neque facilisis, rhoncus sapien nec, varius leo. Nam in lacinia urna. Quisque condimentum leo nec ligula laoreet, nec mollis quam convallis. Aliquam condimentum varius turpis, sed elementum ligula consequat sed. Donec malesuada et erat eu suscipit. Aliquam tincidunt sagittis elit eu viverra. Vestibulum ullamcorper lectus at ipsum tincidunt, non laoreet massa vulputate. Nulla venenatis justo elementum ultricies pharetra. Morbi faucibus blandit nisi, ac venenatis dolor. Suspendisse turpis est, sagittis in sapien id, tincidunt euismod quam. Duis pellentesque pulvinar rutrum.`)
+  const [projectDetails, setProjectDetails] = useState(loadingProject)
+
+  useEffect(() => {
+    if (!project.title) {
+      setProjectDetails(loadingProject)
+    } else {
+      setProjectDetails(project)
+    }
+  }, [project])
+
+  const handleChange = (target) => {
+
+  }
 
   return (
     <Box m={5} >
@@ -79,13 +95,13 @@ export default function ProjectSummary({ project }) {
           <Collapse in={open}>
             <Grid container spacing={1}>
               <Grid container item sm={12} md={4} spacing={1}>
-                <Detail title="Client" value={test1} onChange={setTest1} />
-                <Detail title="Client Contact" value={test2} onChange={setTest2} />
-                <Detail title="Quote Issued Date" value={test3} onChange={setTest3} />
-                <Detail title="Quote Valid Date" value={test4} onChange={setTest4} />
+                <Detail title="Client" value={projectDetails.client ? projectDetails.client.name : "N/A"} onChange={handleChange} />
+                <Detail title="Client Contact" value={projectDetails.contact ? projectDetails.contact.email : "N/A"} onChange={handleChange} />
+                <Detail title="Quote Issued Date" value={projectDetails.quoteIssued} onChange={handleChange} />
+                <Detail title="Quote Valid Date" value={projectDetails.quoteValid} onChange={handleChange} />
               </Grid>
               <Grid container item sm={12} md={8} spacing={1}>
-                <Notes title="Admin Notes" value={test5} onChange={setTest5} />
+                <Notes title="Admin Notes" value={projectDetails.adminNotes} onChange={handleChange} />
               </Grid>
             </Grid>
           </Collapse>
