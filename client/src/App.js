@@ -10,7 +10,9 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
 import { Grid } from "@material-ui/core"
+
 import ProjectsOverview from './components/Views/Projects/Overview'
+import ProjectsDetails from './components/Views/Projects/Details'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -48,9 +50,14 @@ function App() {
             setAuthenticated={setAuthenticated}
           />
         </Route>
-        <ProtectedRoute path="/projects" authenticated={authenticated}>
+        <ProtectedRoute path="/projects" exact authenticated={authenticated}>
           <div className="mainApp">
             <ProjectsOverview />
+          </div>
+        </ProtectedRoute>
+        <ProtectedRoute path="/projects/:projectId" authenticated={authenticated}>
+          <div className="mainApp">
+            <ProjectsDetails />
           </div>
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>

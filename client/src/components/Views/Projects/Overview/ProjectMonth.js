@@ -2,8 +2,11 @@ import { Box, Paper, Typography, Grid, Button } from '@material-ui/core'
 import React from 'react'
 import { format } from 'date-fns'
 
+
+
 import { useDispatch } from 'react-redux'
 import { setView } from '../../../../store/view'
+import { useHistory } from 'react-router'
 
 const formatTitle = (date) => {
   let datetime = new Date(date + "-10")
@@ -21,9 +24,15 @@ const formatDate = (date) => {
 export default function ProjectMonth({ month, projects }) {
   const dispatch = useDispatch()
 
+  const history = useHistory()
+
   const setProjectView = (projectId) => {
     console.log(projectId)
     dispatch(setView(`Projects - ${projectId}`))
+  }
+
+  const navigateToProject = (projectId) => {
+    history.push(`/projects/${projectId}`)
   }
 
 
@@ -41,7 +50,7 @@ export default function ProjectMonth({ month, projects }) {
             <Grid container spacing={2}>
               {projects.map((project) => (
                 <Grid key={project.id} item xs={12}>
-                  <Button onClick={() => setProjectView(project.id)} fullWidth>
+                  <Button onClick={() => navigateToProject(project.id)} fullWidth>
                     <Box fontWeight="bold" width="100%">
 
                       <Grid container alignContent="space-between" onClick={() => setProjectView(project.id)}>

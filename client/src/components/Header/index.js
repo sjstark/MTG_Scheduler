@@ -12,7 +12,7 @@ const WhiteText = withStyles({
   }
 })(Typography)
 
-export default function Header() {
+function Header({ project }) {
 
   const location = useLocation()
 
@@ -26,9 +26,9 @@ export default function Header() {
     switch (viewname) {
       case "projects":
         setView("Projects")
-        if (/^([0-9]+)$/.test(path[2])) {
-          setView("Projects - " + path[2])
-        }
+        // if (/^([0-9]+)$/.test(path[2])) {
+        //   setView("Projects - " + project.title)
+        // }
         return
       case "venues":
         setView("Venues")
@@ -58,9 +58,9 @@ export default function Header() {
   )
 }
 
-// const mapStateToProps = (state) => {
-//   const { view } = state
-//   return { view }
-// }
+const mapStateToProps = (state) => {
+  const project = state.projectsData.currentProject
+  return { project }
+}
 
-// export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps)(Header)

@@ -5,6 +5,9 @@ const SET_PROJECTS = "projects/setProjects"
 const ADD_NEW_PROJECTS = "projects/addNewProjects"
 const ADD_OLD_PROJECTS = "projects/addOldProjects"
 
+const SET_CURRENT_PROJECT = "projects/setCurrentProject"
+const CLEAR_CURRENT_PROJECT = "projects/clearCurrentProject"
+
 const setProjects = (projectsData) => ({
   type: SET_PROJECTS,
   payload: projectsData
@@ -18,6 +21,16 @@ const addNewProjects = (projectsData) => ({
 const addOldProjects = (projectsData) => ({
   type: ADD_OLD_PROJECTS,
   payload: projectsData
+})
+
+const setCurrentProject = (currentProject) => ({
+  type: SET_CURRENT_PROJECT,
+  payload: currentProject
+})
+
+const clearCurrentProject = () => ({
+  type: CLEAR_CURRENT_PROJECT,
+  payload: null
 })
 
 export const initialLoadProjects = () => {
@@ -53,7 +66,10 @@ let initialState = {
   range: [],
   projects: {},
   total: null,
-  loaded: null
+  loaded: null,
+  currentProject: {
+    title: "Loading"
+  }
 }
 
 function projectsReducer(state = initialState, action) {
@@ -70,7 +86,16 @@ function projectsReducer(state = initialState, action) {
       newState.projects = { ...state.projects, ...action.payload.projects }
       newState.total = action.payload.total
       newState.loaded = state.loaded + action.payload.count
-      console.log(newState)
+      return newState
+    case CLEAR_CURRENT_PROJECT:
+      return {
+        ...state, currentProject: {
+          title: "Loading"
+        }
+      }
+    case SET_CURRENT_PROJECT:
+      newState = { ...state }
+      newState.currentProject = action.payload
       return newState
     default:
       return state
