@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_user, logout_user, login_required
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-from server.models import Project, User, db
+from server.models import Project, Shift_Date, User, db
 from server.utils import validation_errors_to_error_messages
 
 from server.forms import CreateProjectForm
@@ -60,6 +60,8 @@ def create_new_project():
 
 
     if form.validate_on_submit():
+
+
         project = Project(
             title = form.title.data,
             start_date = form.startDate.data,
@@ -67,9 +69,19 @@ def create_new_project():
             client_id = form.clientId.data
         )
 
+
+        delta = datetime.strptime(project.end_date, '%Y-%m-%dT%H:%M:%S.%fZ') - datetime.strptime(project.start_date, '%Y-%m-%dT%H:%M:%S.%fZ')
+
+        for x in range(delta.days):
+            schedule_day = datetime.strptime(project.start_date, '%Y-%m-%dT%H:%M:%S.%fZ') - timedelta(days=x)
+            shift_date = Shift_Date(
+                date = schedule_day
+            )
+
+            project.shift_dates.append(shift_date)
+
         db.session.add(project)
         db.session.commit()
-
         return project.to_dict()
 
     return {'errors': validation_errors_to_error_messages(form.errors)}

@@ -12,7 +12,8 @@ class Department(db.Model):
   def to_dict(self):
     return {
       "id": self.id,
-      "title": self.title
+      "title": self.title,
+      "positions": [position.to_dict() for position in self.positions]
     }
 
 

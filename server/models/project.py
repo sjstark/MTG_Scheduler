@@ -36,6 +36,7 @@ class Project(db.Model):
 
           if position.department_id not in departments:
             departments[position.department_id] = {
+              'id': position.department_id,
               'title': position.department.title,
               'positions': []
             }
@@ -97,8 +98,8 @@ class Shift_Date(db.Model):
   def to_schedule(self):
     return {
       "shiftDateId": self.id,
-      "date": self.date,
-      "shifts": [shift.to_dict() for shift in self.shifts]
+      "date": self.date.strftime("%m/%d/%Y"),
+      "shifts": {shift.id:shift.to_dict() for shift in self.shifts}
     }
 
   def to_dict(self):

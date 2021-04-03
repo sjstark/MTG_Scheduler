@@ -10,7 +10,7 @@ export default function ProjectSchedule({ project }) {
     <Box m={5} >
       <Paper>
         <Box p={2}>
-          <ScheduleTable projectId={project.id} schedule={project.schedule} />
+          <ScheduleTable projectId={project.id} schedule={project.schedule} departments={project.departments} />
         </Box>
       </Paper>
     </Box>

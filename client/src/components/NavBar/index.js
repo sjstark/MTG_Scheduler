@@ -17,9 +17,9 @@ const NavBar = ({ setAuthenticated }) => {
       <div className="navbar__top-group">
         <img src={MTGLogo} alt="MTG Logo" />
         <NavButton view="Projects" Icon={ProjectsIcon} />
-        <NavButton view="Venues" Icon={VenuesIcon} />
+        {/* <NavButton view="Venues" Icon={VenuesIcon} /> */}
         <NavButton view="Departments" Icon={DepartmentsIcon} />
-        <NavButton view="Clients" Icon={ClientsIcon} />
+        {/* <NavButton view="Clients" Icon={ClientsIcon} /> */}
       </div>
       <div className="navbar__bottom-group">
         <NavButton view="Admin" Icon={AdminIcon} />
