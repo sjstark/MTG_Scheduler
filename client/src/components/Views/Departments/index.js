@@ -9,11 +9,7 @@ import Fab from '@material-ui/core/Fab'
 
 export default function DepartmentsOverview() {
   const [departments, setDepartments] = useState([])
-  const [selectedDepartment, setSelectedDepartment] = useState({})
-
-  const left = (<DepartmentsList departments={departments} />)
-
-  const right = (<DepartmentDetails department={selectedDepartment} />)
+  const [selectedPosition, setSelectedPosition] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -28,7 +24,10 @@ export default function DepartmentsOverview() {
 
   return (
     <div>
-      <PanelView left={left} right={right} />
+      <PanelView
+        left={<DepartmentsList departments={departments} setDepartments={setDepartments} setCurrent={setSelectedPosition} currentId={selectedPosition && selectedPosition.id} />}
+        right={selectedPosition && <DepartmentDetails position={selectedPosition} />}
+      />
     </div>
   )
 }

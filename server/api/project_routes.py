@@ -84,7 +84,7 @@ def create_new_project():
         db.session.commit()
         return project.to_dict()
 
-    return {'errors': validation_errors_to_error_messages(form.errors)}
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @project_routes.route('/<project_id>', methods=["GET"])

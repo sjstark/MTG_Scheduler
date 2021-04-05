@@ -32,9 +32,12 @@ export default function AddProject({ open, onClose }) {
   const handleSubmit = async () => {
     const res = await axios.post(`/api/projects`, newProjectData)
 
-    console.log(res.data)
+    if (res.status == 200) {
+      onClose()
+    } else {
+      console.log(res)
+    }
 
-    // onClose()
   }
 
   const loadClients = async (inputValue, callback) => {

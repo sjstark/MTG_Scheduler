@@ -35,7 +35,7 @@ class Position(db.Model):
       "title": self.title,
       "departmentId": self.department_id,
       "departmentTitle": self.department.title,
-      "rate": self.rate,
-      "OTRate": self.ot_rate,
-      "DTRate": self.dt_rate
+      "rate": "${:,.2f}".format(self.rate),
+      "OTRate": "${:,.2f}".format(self.ot_rate),
+      "DTRate": "${:,.2f}".format(self.dt_rate)
     }
