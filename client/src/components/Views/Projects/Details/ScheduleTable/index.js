@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {
+  Fab,
   makeStyles,
   Table,
   TableBody,
@@ -9,25 +10,24 @@ import {
 } from '@material-ui/core'
 
 import DepartmentRow from './DepartmentRow'
+import TotalsRow from './TotalsRow'
 
 const useStyles = makeStyles({
-  // table: {
-  //   minWidth: 650,
-  //   position: "relative"
-  // },
-  colCarret: {
-    position: "sticky",
+  colOne: {
+    // position: "sticky",
     left: 0,
     top: 0,
     backgroundColor: "white",
-    width: 30
+    width: "100%",
+    height: "100%",
   },
-  colHead: {
-    position: "sticky",
-    left: 0,
+  colTwo: {
+    // position: "sticky",
+    left: "62px",
     top: 0,
     backgroundColor: "white",
-    width: "10vw",
+    width: "100%",
+    height: "100%",
     textAlign: "center"
   },
   colData: {
@@ -61,9 +61,11 @@ export default function ScheduleTable({ projectId, schedule, departments }) {
   return (
     <>
       <Table>
-        <colgroup>
+        {/* <colgroup className={classes.absoluteLeft} span={2}>
           <col />
           <col className={classes.tableRightBorder} />
+        </colgroup>
+        <colgroup>
           {schedule &&
             schedule.map((el, idx) => (
               <React.Fragment key={`dategroup-${el.date}`}>
@@ -73,10 +75,10 @@ export default function ScheduleTable({ projectId, schedule, departments }) {
               </React.Fragment>
             ))
           }
-        </colgroup>
+        </colgroup> */}
         <TableHead>
           <TableRow>
-            <TableCell className={[classes.colHead, classes.centered]} colSpan={2}>
+            <TableCell className={[classes.colOne, classes.centered]} colSpan={2}>
               Position
             </TableCell>
             {schedule &&
@@ -89,21 +91,21 @@ export default function ScheduleTable({ projectId, schedule, departments }) {
           </TableRow>
 
           <TableRow>
-            <TableCell />
-            <TableCell />
+            <TableCell className={[classes.colOne, classes.centered]} />
+            <TableCell className={[classes.colTwo, classes.centered]} />
             {schedule &&
               schedule.map((el, idx) => (
-                <>
-                  <TableCell key={`datehead-${el.date}-in`} className={classes.centered}>
+                <React.Fragment key={`datehead-${el.date}`}>
+                  <TableCell className={classes.centered}>
                     IN
                   </TableCell>
-                  <TableCell key={`datehead-${el.date}-out`} className={classes.centered}>
+                  <TableCell className={classes.centered}>
                     OUT
                   </TableCell>
-                  <TableCell key={`datehead-${el.date}-qty`} className={classes.centered}>
+                  <TableCell className={classes.centered}>
                     QTY
                   </TableCell>
-                </>
+                </React.Fragment>
               ))
             }
           </TableRow>
@@ -113,9 +115,10 @@ export default function ScheduleTable({ projectId, schedule, departments }) {
         <TableBody>
           {departments &&
             Object.values(departments).map((department, idx) => (
-              <DepartmentRow key={`department-row-${department.id}-${idx}`} department={department} schedule={schedule} />
+              <DepartmentRow key={`department-row-${department.id}-${idx}`} department={department} schedule={schedule} classes={classes} />
             ))
           }
+          <TotalsRow schedule={schedule} classes={classes} />
         </TableBody>
       </Table>
     </>

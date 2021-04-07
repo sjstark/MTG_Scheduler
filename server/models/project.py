@@ -91,6 +91,7 @@ class Shift_Date(db.Model):
 
   id = db.Column(db.Integer, primary_key = True)
   project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable = False)
+  title = db.Column(db.String(150))
   date = db.Column(db.Date, nullable = False)
 
   shifts = db.relationship("Shift", backref = db.backref("shift_dates"), cascade = "all, delete-orphan")
@@ -124,8 +125,8 @@ class Shift(db.Model):
       "id": self.id,
       "positionId": self.position_id,
       "quantity": self.quantity,
-      "startTime": json.dumps(self.start_time, default=str),
-      "endTime": json.dumps(self.end_time, default=str)
+      "startTime": self.start_time.strftime("%H:%M"),
+      "endTime": self.end_time.strftime("%H:%M"),
     }
 
 

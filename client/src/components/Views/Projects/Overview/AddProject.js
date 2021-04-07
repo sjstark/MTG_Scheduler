@@ -108,13 +108,13 @@ export default function AddProject({ open, onClose }) {
                 variant="contained"
               >
                 Create
-            </Button>
+              </Button>
               <Button
                 onClick={onClose}
                 variant="contained"
               >
                 Cancel
-            </Button>
+              </Button>
             </Box>
 
           </Grid>

@@ -38,7 +38,7 @@ export default function ProjectDetails() {
     <Box>
       <ProjectTitle project={project} />
       <ProjectSummary project={project} />
-      <ProjectSchedule project={project} />
+      <ProjectSchedule project={project} setProject={setProject} />
     </Box>
   )
 }

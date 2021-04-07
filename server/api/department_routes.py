@@ -13,7 +13,14 @@ department_routes = Blueprint('department', __name__)
 @login_required
 def load_all_departments():
 
-    departments = Department.query.all()
+    args = request.args
+
+    opt_query = args.get("query")
+
+    if opt_query is not None:
+        departments = Department.query.filter(Department.title.ilike(f'%{opt_query}%')).all()
+    else:
+        departments = Department.query.all()
 
     departments = [department.to_dict() for department in departments]
 
